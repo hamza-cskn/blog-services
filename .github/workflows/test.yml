@@ -17,9 +17,16 @@ jobs:
     strategy:
       matrix:
         node-version: [14.x, 16.x, 18.x]
+        service: [blog, comment]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
+    - name: go ${{ matrix.service }} directory
+      run: cd ${{ matrix.service }}
     - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
-      run: cd blog && npm test
+      name: Use Node.js ${{ matrix.node-version }}
+    - name: install dependencies
+      run: npm install
+    - name: run tests
+      run: npm test
+
