@@ -22,7 +22,7 @@ jobs:
 
     steps:
     - name: go ${{ matrix.service }} directory
-      run: cd ${{ matrix.service }}
+      run: ls && cd ${{ matrix.service }}
     - uses: actions/checkout@v3
       name: Use Node.js ${{ matrix.node-version }}
     - name: install dependencies
