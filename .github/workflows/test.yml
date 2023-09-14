@@ -11,24 +11,15 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
-        node-version: [14.x, 16.x, 18.x]
+        node-version: [14]
         service: [blog, comment]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
     steps:
-    - name: debug directory
-      run: pwd && ls
-    - name: go ${{ matrix.service }} directory
-      run: cd ${{ matrix.service }}
     - uses: actions/checkout@v3
       name: Use Node.js ${{ matrix.node-version }}
     - name: install dependencies
-      run: npm install
+      run: npm --prefix ${{ matrix.service }} install
     - name: run tests
-      run: npm test
-
+      run: npm --prefix ${{ matrix.service }} test

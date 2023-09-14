@@ -35,5 +35,4 @@ export class Blog {
     @Prop()
     original_language: string
 }
-
 export const BlogSchema = SchemaFactory.createForClass(Blog);

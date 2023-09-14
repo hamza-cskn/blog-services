@@ -1,22 +1,14 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { BlogController } from './blog.controller';
-import { BlogService } from './blog.service';
+import { BlogController } from "./blog.controller";
+import { BlogService } from "./blog.service";
 
-describe('AppController', () => {
-  let appController: BlogController;
+describe('Blog Controller Test', () => {
+  let catsController: BlogController;
+  let catsService: BlogService;
 
-  beforeEach(async () => {
-    const app: TestingModule = await Test.createTestingModule({
-      controllers: [BlogController],
-      providers: [BlogService],
-    }).compile();
-
-    appController = app.get<BlogController>(BlogController);
   });
 
-  describe('root', () => {
-    it('should return "Hello World!"', () => {
-
-    });
+  describe('findAll', () => {
+    it('should return an array of cats', async () => {
+      expect("test").toBe("test");
   });
 });

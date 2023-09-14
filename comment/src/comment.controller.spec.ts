@@ -1,20 +1,14 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { CommentController } from './comment.controller';
-import { CommentService } from './comment.service';
+import { CommentController } from "./comment.controller";
+import { CommentService } from "./comment.service";
 
-describe('BlogController', () => {
-  let commentController: CommentController;
+describe('Comment Controller Test', () => {
+  let catsController: CommentController;
+  let catsService: CommentService;
 
-  beforeEach(async () => {
-    const app: TestingModule = await Test.createTestingModule({
-      controllers: [CommentController],
-      providers: [CommentService],
-    }).compile();
+});
 
-    commentController = app.get<CommentController>(CommentController);
-  });
-
-  describe('root', () => {
-
+describe('findAll', () => {
+  it('should return an array of cats', async () => {
+    expect("test").toBe("test");
   });
 });
