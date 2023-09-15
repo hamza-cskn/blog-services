@@ -3,7 +3,7 @@ import {HydratedDocument} from 'mongoose';
 export type BlogRegistryDocument = HydratedDocument<BlogCommentStructure>;
 
 @Schema({versionKey: false}) //to do not include '__v' field.
-export class BlogCommentStructure {
+export class BlogCommentStructure extends Document {
 
     @Prop()
     blogId: string;

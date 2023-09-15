@@ -14,7 +14,7 @@ Here is the tech stack used in this project:
 8. [x] Uses Jest for unit testing.
 9. [x] Uses Svelte & TailwindCSS for frontend. [Visit Front-end Repository](https://github.com/hamza-cskn/personal-website)
 10. [x] Uses SvelteKit for SSR.
-11. [ ] Uses GitHub Actions for CI/CD.
+11. [x] Uses GitHub Actions for CI/CD.
 ![arch](https://github.com/hamza-cskn/blog-services/assets/36128276/a4e18198-f62a-44b7-99cf-f76bedf049dd)
 
 

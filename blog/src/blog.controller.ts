@@ -1,13 +1,22 @@
-import {Body, Controller, Delete, Get, Param, Patch, Post, Query, UseGuards} from '@nestjs/common';
-import {BlogService} from './blog.service';
-import {CreateBlogDto} from './dto/create-blog.dto';
-import {UpdateBlogDto} from './dto/update-blog.dto';
-import {TokenGuard} from "./token/token.guard";
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
+import { BlogService } from './blog.service';
+import { CreateBlogDto } from './dto/create-blog.dto';
+import { UpdateBlogDto } from './dto/update-blog.dto';
+import { TokenGuard } from './token/token.guard';
 
 @Controller('blogs')
 export class BlogController {
-  constructor(private readonly blogsService: BlogService) {
-  }
+  constructor(private readonly blogsService: BlogService) {}
 
   @UseGuards(TokenGuard)
   @Post()
@@ -17,12 +26,17 @@ export class BlogController {
 
   @UseGuards(TokenGuard)
   @Get()
-  findAll(@Query('showUnverified') showUnverified = false,
-          @Query('limit') limit = 50,
-          @Query('offset') offset = 0,
-          @Query('plainText') plainText) {
-    plainText = plainText == `true`;
-    return this.blogsService.findAll({showUnverified, plainText, pagination: {limit, offset}});
+  findAll(
+    @Query('showUnverified') showUnverified = false,
+    @Query('limit') limit = 50,
+    @Query('offset') offset = 0,
+    @Query('plainText') plainText = false,
+  ) {
+    return this.blogsService.findAll({
+      showUnverified,
+      plainText,
+      pagination: { limit, offset },
+    });
   }
 
   @UseGuards(TokenGuard)
