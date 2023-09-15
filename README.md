@@ -46,15 +46,7 @@ Note: The provided `docker-compose.yml` does not include MongoDB as scaled.
    * You can use `curl` or `Postman` to send HTTP requests.
    * API Documentation can be found below.
 
+#### Postman Collection
+The repository has ready-to-use Postman collection. Check `blog-app.postman_collection.json` file or visit the [documentation page](https://documenter.getpostman.com/view/24413595/2s9YC5zDD7).
+
 If you know Turkish, feel free to read my [Rest API](https://medium.com/software-development-turkey/rest-api-nedir-standartları-nelerdir-ca1c7d7d0502) blog.
-
-### API
-Listing all blogs.
-```http request
-GET /api/v1/blogs/?limit=1&offset=1&plainText=true&showUnverified=true
-
-showUnverified: true | false --- when true, shows unvisible blogs.
-plainText: true | false      --- when true, shows blog contents without markdown formats.
-offset: number               --- offset for pagination. skips first n blogs.
-limit: number                --- limit for pagination. shows n blogs.
-```
