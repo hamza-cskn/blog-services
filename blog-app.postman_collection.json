@@ -1,0 +1,716 @@
+{
+	"info": {
+		"_postman_id": "a1fca4f3-5e59-4cde-8998-35c47ad9ece8",
+		"name": "blog-app",
+		"description": "This app contains microservices to store blogs, comments and render them. Measures various metrics and visualizes them. Aims of the repository is having testable, scalable, maintainable and fully Dockerized architecture.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24413595"
+	},
+	"item": [
+		{
+			"name": "Get Blogs",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ip}}:2000/api/v1/blogs/?limit=1&offset=1&plainText=true&showUnverified=true",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "2000",
+					"path": [
+						"api",
+						"v1",
+						"blogs",
+						""
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "1",
+							"description": "Maximum number of blogs the response will contain"
+						},
+						{
+							"key": "offset",
+							"value": "1",
+							"description": "Response blogs after first n blogs."
+						},
+						{
+							"key": "plainText",
+							"value": "true",
+							"description": "Remove markdown format of content."
+						},
+						{
+							"key": "showUnverified",
+							"value": "true",
+							"description": "Include blogs which's visible field is false too."
+						}
+					]
+				},
+				"description": "**Response**\n\n``` json\n[\n    {\n        \"visible\": true,\n        \"title\": \"Hello world from Postman\",\n        \"createdDate\": \"2023-09-15T12:34:42.214Z\",\n        \"modifiedDate\": \"2023-09-15T12:34:42.214Z\",\n        \"content\": \"Hello, today we're gonna talk about flowers and bugs. Flowers There is tons of type of flowers. Here is few of them:  Roses (i like red ones) Sunflowers Tulips Dandelions Bugs  i hate bugs. all software developers spends their life to fix them.\",\n        \"author\": \"Hamza Coşkun\",\n        \"id\": \"65044f62e9cc01ca1b55a5f3\"\n    }\n]\n\n ```"
+			},
+			"response": [
+				{
+					"name": "Get Blogs",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:2000/api/v1/blogs/?limit=1&offset=1&plainText=true&showUnverified=true",
+							"host": [
+								"localhost"
+							],
+							"port": "2000",
+							"path": [
+								"api",
+								"v1",
+								"blogs",
+								""
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "1",
+									"description": "Maximum number of blogs the response will contain"
+								},
+								{
+									"key": "offset",
+									"value": "1",
+									"description": "Response blogs after first n blogs."
+								},
+								{
+									"key": "plainText",
+									"value": "true",
+									"description": "Remove markdown format of content."
+								},
+								{
+									"key": "showUnverified",
+									"value": "true",
+									"description": "Include blogs which's visible field is false too."
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "450"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"1c2-YTqzz3SDIa++b2AoKyu1PX8rRf0\""
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 15 Sep 2023 12:42:58 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"visible\": true,\n        \"title\": \"Hello world from Postman\",\n        \"createdDate\": \"2023-09-15T12:34:42.214Z\",\n        \"modifiedDate\": \"2023-09-15T12:34:42.214Z\",\n        \"content\": \"Hello, today we're gonna talk about flowers and bugs. Flowers There is tons of type of flowers. Here is few of them:  Roses (i like red ones) Sunflowers Tulips Dandelions Bugs  i hate bugs. all software developers spends their life to fix them.\",\n        \"author\": \"Hamza Coşkun\",\n        \"id\": \"65044f62e9cc01ca1b55a5f3\"\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "Post Blog",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "123456",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"Hello world from Postman\",\n    \"author\": \"Hamza Coşkun\",\n    \"content\": \"Hello, today we're gonna talk about flowers and bugs.\\n## Flowers\\nThere is tons of type of flowers. Here is few of them:\\n* Roses (i like red ones)\\n*Sunflowers\\n*Tulips\\n*Dandelions\\n## Bugs\\n i hate bugs. all software developers spends their life to fix them.\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ip}}:2000/api/v1/blogs/",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "2000",
+					"path": [
+						"api",
+						"v1",
+						"blogs",
+						""
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Post blog about flowers",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "123456",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Hello world from Postman\",\n    \"author\": \"Hamza Coşkun\",\n    \"content\": \"Hello, today we're gonna talk about flowers and bugs.\\n## Flowers\\nThere is tons of type of flowers. Here is few of them:\\n* Roses (i like red ones)\\n*Sunflowers\\n*Tulips\\n*Dandelions\\n## Bugs\\n i hate bugs. all software developers spends their life to fix them.\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:2000/api/v1/blogs/",
+							"host": [
+								"localhost"
+							],
+							"port": "2000",
+							"path": [
+								"api",
+								"v1",
+								"blogs",
+								""
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "466"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"1d2-8gnAtv3maTiGOY2pqfrWRf3AdTE\""
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 15 Sep 2023 12:34:42 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"visible\": true,\n    \"title\": \"Hello world from Postman\",\n    \"createdDate\": \"2023-09-15T12:34:42.214Z\",\n    \"modifiedDate\": \"2023-09-15T12:34:42.214Z\",\n    \"content\": \"Hello, today we're gonna talk about flowers and bugs.\\n## Flowers\\nThere is tons of type of flowers. Here is few of them:\\n* Roses (i like red ones)\\n*Sunflowers\\n*Tulips\\n*Dandelions\\n## Bugs\\n i hate bugs. all software developers spends their life to fix them.\",\n    \"author\": \"Hamza Coşkun\",\n    \"id\": \"65044f62e9cc01ca1b55a5f3\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Update Blog",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"visible\": false}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ip}}:2000/api/v1/blogs/:blog-id",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "2000",
+					"path": [
+						"api",
+						"v1",
+						"blogs",
+						":blog-id"
+					],
+					"variable": [
+						{
+							"key": "blog-id",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post Comment",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"writer\": \"Ahmet\",\n    \"content\": \"Thank you for the article!\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ip}}:2001/api/v1/blogs/:blog-id/comments/",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "2001",
+					"path": [
+						"api",
+						"v1",
+						"blogs",
+						":blog-id",
+						"comments",
+						""
+					],
+					"variable": [
+						{
+							"key": "blog-id",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Post Comment",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"writer\": \"Ahmet\",\n    \"content\": \"Thank you for the article!\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:2001/api/v1/blogs/:blog-id/comments/",
+							"host": [
+								"localhost"
+							],
+							"port": "2001",
+							"path": [
+								"api",
+								"v1",
+								"blogs",
+								":blog-id",
+								"comments",
+								""
+							],
+							"variable": [
+								{
+									"key": "blog-id",
+									"value": "65044f62e9cc01ca1b55a5f3"
+								}
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "149"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"95-waZedY80MqHTMCYv33XMs9mMK8A\""
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 15 Sep 2023 12:59:45 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": \"18a98ed0778\",\n    \"visible\": true,\n    \"writer\": \"Ahmet\",\n    \"content\": \"Thank you for the article!\",\n    \"createdDate\": \"2023-09-15T12:59:45.400Z\",\n    \"subComments\": []\n}"
+				}
+			]
+		},
+		{
+			"name": "Post Sub Comment",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"writer\": \"Hamza\",\n    \"content\": \"You're welcome.\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ip}}:2001/api/v1/blogs/:blog-id/comments/:parent-comment-id",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "2001",
+					"path": [
+						"api",
+						"v1",
+						"blogs",
+						":blog-id",
+						"comments",
+						":parent-comment-id"
+					],
+					"variable": [
+						{
+							"key": "blog-id",
+							"value": ""
+						},
+						{
+							"key": "parent-comment-id",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Post Sub Comment",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"writer\": \"Hamza\",\n    \"content\": \"You're welcome.\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:2001/api/v1/blogs/:blog-id/comments/:parent-comment-id",
+							"host": [
+								"localhost"
+							],
+							"port": "2001",
+							"path": [
+								"api",
+								"v1",
+								"blogs",
+								":blog-id",
+								"comments",
+								":parent-comment-id"
+							],
+							"variable": [
+								{
+									"key": "blog-id",
+									"value": "65044f62e9cc01ca1b55a5f3"
+								},
+								{
+									"key": "parent-comment-id",
+									"value": "18a98ed0778"
+								}
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "138"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"8a-60ESxKU5M/Tvoc8HnFyDUTU0450\""
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 15 Sep 2023 13:00:04 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": \"18a98ed5341\",\n    \"visible\": true,\n    \"writer\": \"Hamza\",\n    \"content\": \"You're welcome.\",\n    \"createdDate\": \"2023-09-15T13:00:04.801Z\",\n    \"subComments\": []\n}"
+				}
+			]
+		},
+		{
+			"name": "Get Comments",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ip}}:2001/api/v1/blogs/:blog-id/comments/",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "2001",
+					"path": [
+						"api",
+						"v1",
+						"blogs",
+						":blog-id",
+						"comments",
+						""
+					],
+					"variable": [
+						{
+							"key": "blog-id",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get Comments",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:2001/api/v1/blogs/:blog-id/comments/",
+							"host": [
+								"localhost"
+							],
+							"port": "2001",
+							"path": [
+								"api",
+								"v1",
+								"blogs",
+								":blog-id",
+								"comments",
+								""
+							],
+							"variable": [
+								{
+									"key": "blog-id",
+									"value": "65044f62e9cc01ca1b55a5f3"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "289"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"121-V8EglcVnSwnwonbYDnr515ptTvU\""
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 15 Sep 2023 13:08:08 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"id\": \"18a98ed0778\",\n        \"visible\": true,\n        \"writer\": \"Ahmet\",\n        \"content\": \"Thank you for the article!\",\n        \"createdDate\": \"2023-09-15T12:59:45.400Z\",\n        \"subComments\": [\n            {\n                \"id\": \"18a98ed5341\",\n                \"visible\": true,\n                \"writer\": \"Hamza\",\n                \"content\": \"You're welcome.\",\n                \"createdDate\": \"2023-09-15T13:00:04.801Z\",\n                \"subComments\": []\n            }\n        ]\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "Get Nginx Metrics",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ip}}:80/stub_status",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "80",
+					"path": [
+						"stub_status"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get Nginx Metrics",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:80/stub_status",
+							"host": [
+								"localhost"
+							],
+							"port": "80",
+							"path": [
+								"stub_status"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "plain",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx/1.25.2"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 15 Sep 2023 12:27:19 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "text/plain"
+						},
+						{
+							"key": "Content-Length",
+							"value": "99"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "Active connections: 2 \nserver accepts handled requests\n 3 3 112 \nReading: 0 Writing: 1 Waiting: 1 \n"
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "value",
+				"value": "{{api_token}}",
+				"type": "string"
+			},
+			{
+				"key": "key",
+				"value": "Token",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "ip",
+			"value": "localhost"
+		},
+		{
+			"key": "api_token",
+			"value": "123456"
+		}
+	]
+}
