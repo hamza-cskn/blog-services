@@ -1,0 +1,120 @@
+services:
+  proxy-service:
+    container_name: proxy-service
+    image: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - './nginx/nginx.conf:/etc/nginx/nginx.conf:ro'
+      - './nginx/nginx.conf.default:/etc/nginx/conf.d/default.conf:ro'
+      - './nginx/ssl:/etc/nginx/ssl:ro'
+    networks:
+      - blog-network
+    depends_on:
+      - frontend-service
+  frontend-service:
+    image: frontend-service
+    ports:
+      - "5173:5173"
+    environment:
+      PORT: 5173
+      API_TOKEN: 123456
+      COMMENT_SERVICE_URI: http://comment-service:2001
+      BLOG_SERVICE_URI: http://blog-service:2000
+    depends_on:
+      - comment-service
+      - blog-service
+    networks:
+      - blog-network
+    build:
+      context: ./frontend
+  blog-service:
+    container_name: blog-service
+    image: blog-service
+    ports:
+      - "2000:2000"
+    environment:
+      PORT: 2000
+      API_TOKEN: 123456
+      MONGO_URI: mongodb://root:secret@mongo-service:27017/blog?authSource=admin
+    depends_on:
+      - mongo-service
+    networks:
+      - blog-network
+    build:
+      context: ./blog
+  comment-service:
+    container_name: comment-service
+    image: comment-service
+    ports:
+      - "2001:2001"
+    environment:
+      PORT: 2001
+      API_TOKEN: 123456
+      MONGO_URI: mongodb://root:secret@mongo-service:27017/comment?authSource=admin
+    depends_on:
+      - mongo-service
+    networks:
+      - blog-network
+    build:
+      context: ./comment
+  mongo-service:
+    container_name: mongo-service
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./mongo:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: secret
+    networks:
+      - blog-network
+  prometheus-service:
+    image: prom/prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    networks:
+      - blog-network
+  prometheus-mongodb-exporter:
+    image: percona/mongodb_exporter:0.20
+    ports:
+      - "9216:9216"
+    environment:
+      MONGODB_URI: "mongodb://root:secret@mongo-service:27017"
+    networks:
+      - blog-network
+    depends_on:
+      - mongo-service
+      - prometheus-service
+  prometheus-nginx-exporter:
+    image: nginx/nginx-prometheus-exporter
+    ports:
+      - "9113:9113"
+    depends_on:
+      - proxy-service
+      - prometheus-service
+    environment:
+      SCRAPE_URI: http://proxy-service:80/stub_status
+    networks:
+      - blog-network
+  grafana-service:
+    image: grafana/grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=secret
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning
+      - ./grafana/dashboards:/var/lib/grafana/dashboards
+    networks:
+      - blog-network
+    depends_on:
+      - prometheus-service
+
+networks:
+  blog-network:
+    driver: bridge
