@@ -16,6 +16,7 @@ Here is the tech stack used in this project:
 10. [x] Renders HTML pages on server-side using SvelteKit.
 11. [x] Uses GitHub Actions for CI/CD.
 12. [x] Add `docker compose build` support.
+13. [x] Postman collection for the API
 
 Note: The provided `docker-compose.yml` does not include MongoDB as scaled.
 ![arch](https://github.com/hamza-cskn/blog-services/assets/36128276/a4e18198-f62a-44b7-99cf-f76bedf049dd)
@@ -23,7 +24,6 @@ Note: The provided `docker-compose.yml` does not include MongoDB as scaled.
 
 ### Goals
 1. [ ] Add error tracking and logging.
-2. [ ] Postman collection for API.
 
 ### How to run
 1. Clone the repository: `git clone git@github.com:hamza-cskn/blog-services.git`
