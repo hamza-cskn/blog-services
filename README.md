@@ -1,3 +1,7 @@
+<p align="center">
+  <img style="width: 200px" src="https://github.com/hamza-cskn/blog-services/blob/main/frontend/static/favicon.png"/>
+</p>
+
 ## Blog Services
 
 This repository contains microservices to store blogs, comments and render them. Measures various metrics and visualizes them. Aims of the repository is having testable, scalable, maintainable and fully Dockerized architecture.
