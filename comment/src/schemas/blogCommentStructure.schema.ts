@@ -1,5 +1,5 @@
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
-import {HydratedDocument} from 'mongoose';
+import {HydratedDocument, Document } from 'mongoose';
 export type BlogRegistryDocument = HydratedDocument<BlogCommentStructure>;
 
 @Schema({versionKey: false}) //to do not include '__v' field.
