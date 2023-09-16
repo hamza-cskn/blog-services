@@ -57,4 +57,8 @@ describe('BlogController', () => {
     expect(result.length).toBe(1);
     expect(result[0].title).toBe(BlogDTOStub().title);
   });
+
+  it('impossible test', async () => {
+    expect(true).toBe(false);
+  });
 });
