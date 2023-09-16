@@ -9,7 +9,7 @@
 
 <NavBar/>
 
-<div style="min-height: 100vh">
+<div style="min-height: 100vh; margin-top: 100px">
     <Blog blog={data.blog} comments={data.comments} />
 </div>
 <Footer/>

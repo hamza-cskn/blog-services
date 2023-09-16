@@ -3,3 +3,13 @@ comment/node_modules
 .idea/
 nginx/ssl/
 */node_modules/
+grafana
+mongo
+.DS_Store
+*/.DS_Store
+*/.idea/
+*/.gitignore
+*/.git/
+*/.gitmodules
+*/.gitattributes
+*/.gitkeep

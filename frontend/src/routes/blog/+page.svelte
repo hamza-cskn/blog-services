@@ -7,7 +7,7 @@
 </script>
 
 <NavBar/>
-<div style="min-height: 100vh">
+<div style="min-height: 100vh; margin-top: 100px">
     <BlogSection {data}/>
 </div>
 <Footer/>
