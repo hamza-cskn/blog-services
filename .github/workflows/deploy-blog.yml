@@ -8,16 +8,15 @@ on:
 jobs:
   deploy-if-tests-pass:
     runs-on: ubuntu-latest
-
+    permissions:
+      contents: read
+      packages: write
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
       - name: Login to GitHub Packages
         run: echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-
       - name: Build and push Docker image
         run: |
           docker build -t ghcr.io/${{ github.repository }}:${{ github.sha }} blog/
