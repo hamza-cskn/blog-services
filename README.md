@@ -1,5 +1,5 @@
 <p align="center">
-  <img style="width: 200px" src="https://github.com/hamza-cskn/blog-services/blob/main/frontend/static/favicon.png"/>
+  <img style="width: 200px" src="https://github.com/hamza-cskn/blog-services/blob/main/frontend/static/favicon.png" alt="logo of website"/>
 </p>
 
 ## Blog Services
