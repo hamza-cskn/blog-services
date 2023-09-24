@@ -1,4 +1,4 @@
-import {getUser, isSuccess} from "./fetcher.js";
+import {getUser, isSuccess} from "../bin/fetcher.js";
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load({fetch, cookies}) {

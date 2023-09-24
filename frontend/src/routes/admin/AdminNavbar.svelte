@@ -17,7 +17,6 @@
 </script>
 <!-- research why import is mandatory -->
 <style>
-    @import '../../app.postcss';
     nav {
         z-index: 100;
         backdrop-filter: blur(8px);
@@ -69,7 +68,7 @@
                  md:border-0 md:hover:text-black md:p-0 dark:text-gray-300
                  md:dark:hover:text-white dark:hover:text-white">Sign Out</a>
                     <span class="text-2xs">Logged as <span
-                            class="text-blue-500">{user.credentials.username}</span></span>
+                            class="text-blue-500">{user.username}</span></span>
                 </li>
             </ul>
         </div>

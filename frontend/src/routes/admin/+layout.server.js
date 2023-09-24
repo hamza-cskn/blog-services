@@ -7,14 +7,14 @@ export async function load({ cookies, fetch}) {
         return {user: undefined};
 
     const payload = await fetchUser(fetch, token);
-    if (!payload || !payload.validity || !payload.payload.permissions.includes("ACCESS_ADMIN_PANEL"))
+    if (!payload || !payload.validity || !payload.permissions.includes("ACCESS_ADMIN_PANEL"))
         throw redirect(307, '/login');
 
     return {user: payload.payload}
 }
 
 async function fetchUser(fetch, token) {
-    return (await fetch(process.env.AUTH_SERVICE_URI + `/api/v1/validate`, {
+    return (await fetch(process.env.AUTH_SERVICE_URI + `/api/v1/validate?permissions=true`, {
         method: "POST",
         headers,
         body: JSON.stringify({access_token: token})

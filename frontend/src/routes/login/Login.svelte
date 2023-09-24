@@ -45,7 +45,7 @@
                     </p>
                     {#if user}
                         <p class="text-sm font-light text-gray-500 dark:text-gray-400">
-                            You are logged in as <span class="font-medium text-blue-500">{user.credentials.username}</span>
+                            You are logged in as <span class="font-medium text-blue-500">{user.username}</span>
                         </p>
                     {/if}
                 </form>

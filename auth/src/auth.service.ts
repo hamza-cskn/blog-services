@@ -4,6 +4,7 @@ import {CreateUserDto} from "./dto/create-user.dto";
 import {UserDto} from "./dto/user.dto";
 import {CredentialsDto} from "./dto/credentials.dto";
 import {Permissions} from "./permissions/permissions";
+import {jwtConstants} from "./constants";
 
 @Injectable()
 export class AuthService {
@@ -17,6 +18,8 @@ export class AuthService {
         registeredAt: new Date(),
         permissions: [Permissions.ACCESS_ADMIN_PANEL]
     } ];
+
+    private jwtIds = [];
 
     constructor(private jwtService: JwtService) {}
 
@@ -48,11 +51,24 @@ export class AuthService {
                                                 user.credentials.password === credentials.password);
         if (!user)
             throw new UnauthorizedException("No user found with given credentials");
-        return await this.generateToken(user);
+
+        const jti = this.uuid();
+        const exp= new Date().getTime() + 1000 * jwtConstants.duration;
+
+        this.jwtIds.push({jti, exp, userId: user.id});
+
+        return await this.generateToken(jti);
     }
 
-    private async generateToken(payload: any): Promise<string> {
-        return this.jwtService.signAsync(payload);
+    public getUserByJti(jti: string): UserDto {
+        const jtiData = this.jwtIds.find(jtiData => jtiData.jti === jti);
+        if (!jtiData)
+            throw new UnauthorizedException("Invalid token");
+        return this.fake_db.find(user => user.id === jtiData.userId);
+    }
+
+    private async generateToken(jti: string): Promise<string> {
+        return this.jwtService.signAsync({jti});
     }
 
     async validateToken(token: string): Promise<any> {
@@ -60,9 +76,7 @@ export class AuthService {
             throw new UnauthorizedException("No token provided");
 
         try {
-            const payload = await this.jwtService.verifyAsync(token);
-            delete payload.credentials.password;
-            return payload;
+            return await this.jwtService.verifyAsync(token);
         } catch {
             throw new UnauthorizedException("Invalid token");
         }
@@ -70,7 +84,7 @@ export class AuthService {
 
     private uuid() {
         return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
-            .replace(/[xy]/g, function (c) {
+            .replace(/[xy]/g, c => {
                 const r = Math.random() * 16 | 0,
                     v = c == 'x' ? r : (r & 0x3 | 0x8);
                 return v.toString(16);
