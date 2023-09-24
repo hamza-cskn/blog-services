@@ -18,10 +18,10 @@ export class BlogController {
     @UseGuards(TokenGuard)
     @Get()
     findAll(
-        @Query('showUnverified') showUnverified,
+        @Query('showUnverified') showUnverified:string | boolean = false,
         @Query('limit') limit = 50,
         @Query('offset') offset = 0,
-        @Query('plainText') plainText,
+        @Query('plainText') plainText:string | boolean = false,
     ) {
         plainText = plainText === 'true';
         showUnverified = showUnverified === 'true';
