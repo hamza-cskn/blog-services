@@ -1,7 +1,7 @@
 services:
   proxy-service:
     container_name: proxy-service
-    image: nginx
+    image: nginx:${NGINX_VERSION}
     ports:
       - "80:80"
       - "443:443"
@@ -14,7 +14,7 @@ services:
     depends_on:
       - frontend-service
   frontend-service:
-    image: frontend-service
+    image: frontend-service:${FRONTEND_SERVICE_VERSION}
     ports:
       - "5173:5173"
     environment:
@@ -22,6 +22,7 @@ services:
       API_TOKEN: 123456
       COMMENT_SERVICE_URI: http://comment-service:2001
       BLOG_SERVICE_URI: http://blog-service:2000
+      AUTH_SERVICE_URI: http://auth-service:2002
     depends_on:
       - comment-service
       - blog-service
@@ -31,7 +32,7 @@ services:
       context: ./frontend
   blog-service:
     container_name: blog-service
-    image: blog-service
+    image: blog-service:${BLOG_SERVICE_VERSION}
     ports:
       - "2000:2000"
     environment:
@@ -46,7 +47,7 @@ services:
       context: ./blog
   comment-service:
     container_name: comment-service
-    image: comment-service
+    image: comment-service:${COMMENT_SERVICE_VERSION}
     ports:
       - "2001:2001"
     environment:
@@ -59,9 +60,24 @@ services:
       - blog-network
     build:
       context: ./comment
+  auth-service:
+    container_name: auth-service
+    image: auth-service:${AUTH_SERVICE_VERSION}
+    ports:
+      - "2002:2002"
+    environment:
+      PORT: 2002
+      API_TOKEN: 123456
+      MONGO_URI: mongodb://root:secret@mongo-service:27017/comment?authSource=admin
+    depends_on:
+      - mongo-service
+    networks:
+      - blog-network
+    build:
+      context: ./auth
   mongo-service:
     container_name: mongo-service
-    image: mongo
+    image: mongo:${MONGO_VERSION}
     ports:
       - "27017:27017"
     volumes:
@@ -72,7 +88,7 @@ services:
     networks:
       - blog-network
   prometheus-service:
-    image: prom/prometheus
+    image: prom/prometheus:${PROMETHEUS_VERSION}
     ports:
       - "9090:9090"
     volumes:
@@ -80,7 +96,7 @@ services:
     networks:
       - blog-network
   prometheus-mongodb-exporter:
-    image: percona/mongodb_exporter:0.20
+    image: percona/mongodb_exporter:${MONGODB_EXPORTER_VERSION}
     ports:
       - "9216:9216"
     environment:
@@ -91,7 +107,7 @@ services:
       - mongo-service
       - prometheus-service
   prometheus-nginx-exporter:
-    image: nginx/nginx-prometheus-exporter
+    image: nginx/nginx-prometheus-exporter:${NGINX_EXPORTER_VERSION}
     ports:
       - "9113:9113"
     depends_on:
@@ -102,7 +118,7 @@ services:
     networks:
       - blog-network
   grafana-service:
-    image: grafana/grafana
+    image: grafana/grafana:${GRAFANA_VERSION}
     ports:
       - "3000:3000"
     environment:

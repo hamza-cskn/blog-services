@@ -22,8 +22,8 @@
                 from experiences of others.</p>
             <p class="font-light text-gray-400 sm:text-md dark:text-gray-500 mt-3 ml-auto mr-auto italic w-1/2">"You
                 must learn from the
-                mistakes of others. You can't possibly livelong enough to make them all yourself."</p>
-            <p class="font-light text-gray-400 sm:text-md dark:text-gray-500">-Sam Levenson</p>
+                mistakes of others. You can't possibly livelong enough to make them all yourself." <span class="font-light text-gray-400 sm:text-md dark:text-gray-500">-Sam Levenson</span>
+            </p>
         </div>
         {#if blogs}
             <div class="grid gap-8 lg:grid-cols-2">
